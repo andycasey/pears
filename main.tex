@@ -1,0 +1,137 @@
+% Copyright 2023 Andy Casey (Monash) and friends
+
+\documentclass[modern]{aastex631}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\twocolumngrid}{}
+\addtolength{\topmargin}{-0.35in}
+\addtolength{\textheight}{0.6in}
+\setlength{\parindent}{3.5ex}
+\renewcommand{\paragraph}[1]{\medskip\par\noindent\textbf{#1}~---}
+
+% figure setup
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{shadows}
+\definecolor{captiongray}{HTML}{555555}
+\mdfsetup{%
+innertopmargin=2ex,
+innerbottommargin=1.8ex,
+linecolor=captiongray,
+linewidth=0.5pt,
+roundcorner=1pt,
+shadow=false,
+}
+\newlength{\figurewidth}
+\setlength{\figurewidth}{0.75\textwidth}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% Other possible titles
+\newcommand{\chosentitle}{Pair-wise differential abundance measurements can yield extremely precise estimates of the chemical homogeneity of star clusters}
+
+\shorttitle{\chosentitle}
+\shortauthors{Casey}
+\newcommand{\documentname}{\textsl{Article}}
+\newcommand{\sectionname}{Section}
+
+\newcommand{\project}[1]{\textit{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vectheta}{\boldsymbol{\theta}}
+\newcommand{\vecalpha}{\boldsymbol{\alpha}}
+\newcommand{\vecbeta}{\boldsymbol{\beta}}
+\newcommand{\vecgamma}{\boldsymbol{\gamma}}
+\newcommand{\vecW}{\mathbf{W}} % stellar line absorption basis weights
+\newcommand{\vecF}{\mathbf{F}} % stellar line absorption basis vectors
+\newcommand{\vecG}{\mathbf{G}} % telluric line absorption basis vectors
+\newcommand{\vecH}{\mathbf{H}} % continuum basis vectors
+\newcommand{\vecX}{\mathbf{X}}
+
+\newcommand{\hadamard}{\odot}
+\newcommand{\apogee}{\project{APOGEE}}
+\newcommand{\boss}{\project{BOSS}}
+\newcommand{\sdss}{\project{SDSS}}
+\newcommand{\eso}{\project{ESO}}
+\newcommand{\harps}{\project{HARPS}}
+
+\newcommand{\unit}[1]{\mathrm{#1}}
+\newcommand{\mps}{\unit{m\,s^{-1}}}
+\newcommand{\kmps}{\unit{km\,s^{-1}}}
+\newcommand*{\transpose}{^{\mkern-1.5mu\mathsf{T}}}
+
+
+\definecolor{tab:blue}{HTML}{1170aa}
+\definecolor{tab:red}{HTML}{d1615d}
+\newcommand{\todo}[1]{\textcolor{tab:red}{#1}}
+
+\sloppy\sloppypar\raggedbottom\frenchspacing
+\begin{document}
+
+\title{\chosentitle}
+
+\author[0000-0003-0174-0564]{Andrew R. Casey}
+\affiliation{School of Physics \& Astronomy, Monash University, Australia}
+\affiliation{Centre of Excellence for Astrophysics in Three Dimensions (ASTRO-3D)}
+\affiliation{Center for Computational Astrophysics, Flatiron Institute, a division of the Simons Foundation}
+
+\author{friends}
+
+
+\begin{abstract}\noindent
+    Stars are formed in clusters. Among stars that formed in the same cluster, there is some finite spread of chemical abundances. Knowing how this intrinsic abundance dispersion varies for different star clusters is important for understanding star formation, and places strong limits on how well we can infer the chemodynamic evolution of the Milky Way. Here we use basic statistics to show that the chemical homogeneity of star clusters can be estimated far more precisely from existing data, without the need for any reference (or so called benchmark) stars.
+\end{abstract}
+
+
+
+\section{Introduction} \label{sec:introduction}
+Stellar spectroscopy is plagued by systematic effects. When measuring stellar metallicity from spectra, most analyses incorrectly assume the conditions are in local theromdynamic equilibrium, that a stellar photosphere is fully parameterised by one dimension, and an list of electron transitions that often have poorly known properties. These effects conspire to produce both biased and noisy estimates of metallicity.\\
+
+These effects can be mitigated by measuring the chemical abundance of one star \emph{relative} to another. For two stars of similar stellar parameters, the effects of non-local thermodynamic equilibrium are approximately the same. If a single transition has poorly known parameters that lead to a biased estimate of metallicity, that bias is approximately the same for two very similar stars. This has led to the line-by-line differential abundance analysis technique, where all measurements are made relative to a so called reference star: where the stellar parameters of the reference star are well-measured by non-spectroscopic methods (e.g., asteroseismology, interferometry).\\
+
+
+\section{Method} \label{sec:method}
+Here we show that the line-by-line differential abundance technique can be extended to estimate the chemical homogenity of star clusters without the need for reference stars. Let ${X}$ be a set of observations that are drawn from a normal distribution
+\begin{eqnarray}
+   X \sim \mathcal{N}(\mu_x, \sigma_x^2)
+\end{eqnarray}
+\noindent{}with mean $\mu_x$ and variance $\sigma_x^2$. Here, $X$ represents the metallicity [Fe/H] measured from a star in a cluster, and we are interested in estimating $\sigma_x$. Because each estimate of $X$ is biased by systematic effects, we will instead measure the pair-wise metallicity $Y$
+\begin{eqnarray}
+    Y_{ij} = X_i - X_j
+\end{eqnarray}
+\noindent{}in a line-by-line differential manner. We provide a step-by-step example in Section~\ref{sec:experiments}. The variance of $Y_{ij}$ is given by
+\begin{equation}
+    \mathrm{Var}(Y_{ij}) = \mathrm{Var}(X_i - X_j)
+\end{equation}
+\begin{equation}
+    \mathrm{Var}(Y_{ij}) = \mathrm{Var}(X_i) + \mathrm{Var}(X_j) - 2\mathrm{Cov}(X_i,X_j)
+\end{equation}
+\noindent{}where $\mathrm{Cov}(X_i,X_j)$ is the covariance between metallicity measurements of two (randomly selected) stars in a cluster that have near identical stellar parameters. We assume that the covariance will tend towards zero as the difference in stellar parameters of the two stars approaches zero. We further assume that the $X$ values are identitically distributed such that 
+\begin{equation}
+    \mathrm{Var}(Y) = 2\,\mathrm{Var}(X)
+\end{equation}
+\noindent{}by measuring many pair-wise abundance differences $Y$ and computing their sample variance $\mathrm{Var}(Y)$ we can estimate the intrinsic chemical homogenity of a cluster, and that estimate is largely unaffected by systematics due to stellar parameters and incorrect line properties:
+\begin{equation}
+    \sigma_x = \frac{\sigma_y}{\sqrt{2}} \quad .
+    \label{eq:sigma_x_to_sigma_y}
+\end{equation}
+
+\section{Experiments} \label{sec:experiments}
+
+
+
+
+\section{Conclusions} \label{sec:conclusions}
+
+
+\paragraph{Software}
+\texttt{numpy} \citep{numpy}; 
+\texttt{matplotlib} \citep{matplotlib}; 
+
+
+% include bibliography
+\bibliographystyle{aasjournal}
+%\bibliography{bibliography}
+
+\end{document}
