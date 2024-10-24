@@ -32,7 +32,8 @@ shadow=false,
 % Other possible titles
 \newcommand{\chosentitle}{Pair-wise differential abundance measurements can yield extremely precise estimates of the chemical homogeneity of star clusters}
 
-\shorttitle{\chosentitle}
+\shorttitle{Pair-wise differential abundance measurements}
+
 \shortauthors{Casey}
 \newcommand{\documentname}{\textsl{Article}}
 \newcommand{\sectionname}{Section}
@@ -107,23 +108,40 @@ Here we show that the line-by-line differential abundance technique can be exten
 \begin{equation}
     \mathrm{Var}(Y_{ij}) = \mathrm{Var}(X_i) + \mathrm{Var}(X_j) - 2\mathrm{Cov}(X_i,X_j)
 \end{equation}
-\noindent{}where $\mathrm{Cov}(X_i,X_j)$ is the covariance between metallicity measurements of two (randomly selected) stars in a cluster that have near identical stellar parameters. We assume that the covariance will tend towards zero as the difference in stellar parameters of the two stars approaches zero. We further assume that the $X$ values are identitically distributed such that 
+\noindent{}where $\mathrm{Cov}(X_i,X_j)$ is the covariance between metallicity measurements of two (randomly selected) stars in a cluster that have near identical stellar parameters. We assume that the covariance will tend towards zero as the difference in stellar parameters of the two stars approaches zero. We further assume that the $X$ and $Y$ values are each identitically distributed such that 
 \begin{equation}
     \mathrm{Var}(Y) = 2\,\mathrm{Var}(X)
 \end{equation}
-\noindent{}by measuring many pair-wise abundance differences $Y$ and computing their sample variance $\mathrm{Var}(Y)$ we can estimate the intrinsic chemical homogenity of a cluster, and that estimate is largely unaffected by systematics due to stellar parameters and incorrect line properties:
+By taking many pair-wise abundance differences $Y$ and computing their sample variance $\mathrm{Var}(Y)$ we can estimate the intrinsic chemical homogenity of a cluster, and that estimate is largely unaffected by systematics due to stellar parameters and incorrect line properties:
 \begin{equation}
     \sigma_x = \frac{\sigma_y}{\sqrt{2}} \quad .
     \label{eq:sigma_x_to_sigma_y}
 \end{equation}
 
+The literature on pair-wise differential abundance measurements has shown that we can expect a precision in $Y$ of order 0.005 or 0.010\,dex, even for stars that we do not know for sure were born in the same cluster (e.g., just Solar analogues). To first order this would translate to being able to measure cluster homogenity to a precision between $\sigma_x = 0.003$ to 0.007~dex, about two orders of magnitude more precisely than literature estimates of chemical homogenity that are based entirely from sample variance of (systematically limited) classical measurements $\mathrm{Var}(X)$.
+
 \section{Experiments} \label{sec:experiments}
 
+Let's say you have some stars in a cluster. Either you have observed them already or you haven't.
+\begin{enumerate}
+    \item Pair stars up. Either by their proximity in color-luminosity space, or by ordering a distance matrix of pair-wise things.
+    \item For each star, estimate the stellar parameters in the way you know how. This could be by a classical excitation/ionization balance, spectrum fitting, etc, or by fixing the temperature from photometry and estimating logg from astrometry or an isochrone.
+    \item For one atomic transition, compute the abundance in star A and star B. Note the difference $A-B$ and repeat it for all transitions.
+    \item Take the mean of the line-by-line abundance differences as $Y_{ij}$. Keep the standard deviation. We will do something with it.
+    \item Repeat steps 2-4 for all paired stars, then compute the sample variance. Times by $1/\sqrt{2}$ and write the paper.
+\end{enumerate}
 
+Set up a simulation where we have:
+- atomic lines that produce biases that vary smoothly with stellar parameters, and they are all biased in their own ways
+- each atomic line measurement has some uncertainty
+- there is some intrinsic cluster dispersion (which we want to measure)
+
+First we take the standard deviation of the observed (biased) abundances, and how that scales if we increase the number of stars.
+Now we compute the standard deviation from random pair-wise abundances, and show how that estimate scales with the number of stars.
 
 
 \section{Conclusions} \label{sec:conclusions}
-
+We have shown that freshman statistics is useful.
 
 \paragraph{Software}
 \texttt{numpy} \citep{numpy}; 
