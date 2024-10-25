@@ -118,7 +118,7 @@ By taking many pair-wise abundance differences $Y$ and computing their sample va
     \label{eq:sigma_x_to_sigma_y}
 \end{equation}
 
-The literature on pair-wise differential abundance measurements has shown that we can expect a precision in $Y$ of order 0.005 or 0.010\,dex, even for stars that we do not know for sure were born in the same cluster (e.g., just Solar analogues). To first order this would translate to being able to measure cluster homogenity to a precision between $\sigma_x = 0.003$ to 0.007~dex, about two orders of magnitude more precisely than literature estimates of chemical homogenity that are based entirely from sample variance of (systematically limited) classical measurements $\mathrm{Var}(X)$.
+%The literature on pair-wise differential abundance measurements has shown that we can expect a precision in $Y$ of order 0.005 or 0.010\,dex, even for stars that we do not know for sure were born in the same cluster (e.g., just Solar analogues). To first order this would translate to being able to measure cluster homogenity to a precision between $\sigma_x = 0.003$ to 0.007~dex, about two orders of magnitude more precisely than literature estimates of chemical homogenity that are based entirely from sample variance of (systematically limited) classical measurements $\mathrm{Var}(X)$.
 
 \section{Experiments} \label{sec:experiments}
 
@@ -131,6 +131,8 @@ Let's say you have some stars in a cluster. Either you have observed them alread
     \item Repeat steps 2-4 for all paired stars, then compute the sample variance. Times by $1/\sqrt{2}$ and write the paper.
 \end{enumerate}
 
+
+
 Set up a simulation where we have:
 - atomic lines that produce biases that vary smoothly with stellar parameters, and they are all biased in their own ways
 - each atomic line measurement has some uncertainty
@@ -138,6 +140,11 @@ Set up a simulation where we have:
 
 First we take the standard deviation of the observed (biased) abundances, and how that scales if we increase the number of stars.
 Now we compute the standard deviation from random pair-wise abundances, and show how that estimate scales with the number of stars.
+
+\begin{figure*}
+    \includegraphics*[width=\textwidth]{simulation.pdf}
+    \caption{A simulation.\label{fig:simulation}}
+\end{figure*}
 
 
 \section{Conclusions} \label{sec:conclusions}
