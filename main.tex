@@ -122,6 +122,22 @@ By taking many pair-wise abundance differences $Y$ and computing their sample va
 
 \section{Experiments} \label{sec:experiments}
 
+Here simulate a star cluster with some intrinsic chemical homogeneity that we seek to estimate, where individual absorption lines have some smoothly-varying systematic differences as a function of stellar parameters. We take a 1 Gyr MIST isochrone with [Fe/H] = 0.03 and randomly select 100 evolutionary points between the main-sequence and the core-helium burning phase. We set the cluster mean abundance to be [Fe/H] = 0.03 dex to match our chosen isochrone, and we assume the cluster has an intrinsic metallicity dispersion of 0.003\,dex.\\
+
+We idealistically assume that we could measure the same 250 iron lines in every star. For each line we will assume that it has some systematic bias that varies with effective temperature, where the bias is simulated by random draws from a Gaussian process that has a mean centered on zero. In other words, on average the lines will have no bias, but individually a line can have systematic biases that vary smoothly with effective temperature. Specifically we use a squared exponential kernel with a length scale of 3000\,K and a per line standard deviation of 0.3\,dex. We we will assume that there is random scatter in a single line abundance of 0.001\,dex, and that the scatter in effective temperature and surface gravity is 100\,K and 0.08\,dex, respectively.\\
+
+The simulated data set is shown in the left panel of Figure~\ref{fig:simulation}. Stars have slightly different measured abundances, which tend to center around the true mean cluster abundance of 0.03\,dex. The effects of the per-line systematics are visible. Although our Gaussian process prior has zero mean, the mean star abundance (averaged over all lines) can demonstrate metallicity trends as a function of stellar parameters, which mimics results that are routinely reported from spectroscopy. In the right-hand panel of Figure~\ref{fig:simulation} we seek to estimate the chemical homogenity in two ways. The first is where we take the standard deviation of metallicity meausrements of individual stars. This statistic is dominated by systematic errors and leads to a significant over-estimate of the cluster chemical homogeneity ($0.007 \pm 0.001$\,dex). In the pair-wise estimate we have paired stars based on their stellar parameters, and computed the variance of the pair-wise abundance differences. Specifically, for each pair of stars we compute the mean of the $\Delta$[Fe/H] for each line. Then we compute the standard deviation of those pair-wise mean abundances, and multiply it by $1/\sqrt{2}$ to estimate $\sigma_{\mathrm{[Fe/H]}}$. The true level of cluster homogeniety is within the standard error of the pair-wise estimate.\\
+
+
+\begin{figure*}
+    \includegraphics*[width=\textwidth]{simulation.pdf}
+    \caption{A simulation.\label{fig:simulation}}
+\end{figure*}
+
+
+\section{Discussion}
+
+
 Let's say you have some stars in a cluster. Either you have observed them already or you haven't.
 \begin{enumerate}
     \item Pair stars up. Either by their proximity in color-luminosity space, or by ordering a distance matrix of pair-wise things.
@@ -131,20 +147,6 @@ Let's say you have some stars in a cluster. Either you have observed them alread
     \item Repeat steps 2-4 for all paired stars, then compute the sample variance. Times by $1/\sqrt{2}$ and write the paper.
 \end{enumerate}
 
-
-
-Set up a simulation where we have:
-- atomic lines that produce biases that vary smoothly with stellar parameters, and they are all biased in their own ways
-- each atomic line measurement has some uncertainty
-- there is some intrinsic cluster dispersion (which we want to measure)
-
-First we take the standard deviation of the observed (biased) abundances, and how that scales if we increase the number of stars.
-Now we compute the standard deviation from random pair-wise abundances, and show how that estimate scales with the number of stars.
-
-\begin{figure*}
-    \includegraphics*[width=\textwidth]{simulation.pdf}
-    \caption{A simulation.\label{fig:simulation}}
-\end{figure*}
 
 
 \section{Conclusions} \label{sec:conclusions}
