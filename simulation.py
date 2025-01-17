@@ -117,6 +117,16 @@ X_star_err = np.std(X_obs, axis=1) / np.sqrt(n_lines)
 
 # Pair wise stars 
 pair_indices = np.argsort(star_indices).reshape((-1, 2))
+for i, j in pair_indices:
+    ax.plot(
+        teff_obs[[i, j]],
+        logg_obs[[i, j]],
+        c="#666666",
+        lw=0.75,
+        linestyle=":",
+        zorder=-10
+    )
+
 # randomize
 
 X_diff = np.diff(X_obs[pair_indices], axis=1)[:, 0] 

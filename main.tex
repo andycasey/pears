@@ -30,7 +30,7 @@ shadow=false,
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 % Other possible titles
-\newcommand{\chosentitle}{Pair-wise differential abundance measurements can yield extremely precise estimates of the chemical homogeneity of star clusters}
+\newcommand{\chosentitle}{The chemical homogeneity of star clusters is better measured from pair-wise differential abundances}
 
 \shorttitle{Pair-wise differential abundance measurements}
 
@@ -45,7 +45,6 @@ shadow=false,
 \newcommand{\vecbeta}{\boldsymbol{\beta}}
 \newcommand{\vecgamma}{\boldsymbol{\gamma}}
 \newcommand{\vecW}{\mathbf{W}} % stellar line absorption basis weights
-\newcommand{\vecF}{\mathbf{F}} % stellar line absorption basis vectors
 \newcommand{\vecG}{\mathbf{G}} % telluric line absorption basis vectors
 \newcommand{\vecH}{\mathbf{H}} % continuum basis vectors
 \newcommand{\vecX}{\mathbf{X}}
@@ -81,38 +80,63 @@ shadow=false,
 
 
 \begin{abstract}\noindent
-    Stars are formed in clusters. Among stars that formed in the same cluster, there is some finite spread of chemical abundances. Knowing how this intrinsic abundance dispersion varies for clusters born in different environments is important for understanding star formation, and places strong limits on how well we can infer the chemodynamic evolution of the Milky Way. Here we use basic statistics to show that the chemical homogeneity of star clusters can be estimated far more precisely from existing data, without the need for any reference (or so called benchmark) stars.
+    Stars form in clusters. There is some finite spread of chemical abundances among stars that form in the same cluster. Knowing how the intrinsic abundance dispersion varies between clusters places strong limits on how well we can infer the chemodynamic evolution of the Milky Way. With a trivial proof and simulations, here we show that the chemical homogeneity --~which is usually reported as the standard deviation of $N$ stellar abundances~-- can be more precisely estimated from the standard deviation of $N/2$ line-by-line  differential abundances, without using any specific reference (or so-called benchmark) stars. 
+    Systematic effects are mitigated in a line-by-line differential analysis, and systematics often dominate the error budget.
+    We show that if line-by-line differential abundance measurements are at least $\approx30$\% more precise than classical methods, the chemical homogeneity measured from pair-wise line-by-line differential abundance measurements is both more accurate and more precise. 
+    
 \end{abstract}
 
 
-
 \section{Introduction} \label{sec:introduction}
-Stellar spectroscopy is plagued by systematic effects. When measuring stellar metallicity from spectra, most analyses incorrectly assume the conditions are in local theromdynamic equilibrium, that a stellar photosphere is fully parameterised by one dimension, and an list of electron transitions that often have poorly known properties. These effects conspire to produce both biased and noisy estimates of metallicity.\\
 
-These effects can be mitigated by measuring the chemical abundance of one star \emph{relative} to another. For two stars of similar stellar parameters, the effects of non-local thermodynamic equilibrium are approximately the same. If a single transition has poorly known parameters that lead to a biased estimate of metallicity, that bias is approximately the same for two very similar stars. This has led to the line-by-line differential abundance analysis technique, where all measurements are made relative to a so called reference star: where the stellar parameters of the reference star are well-measured by non-spectroscopic methods (e.g., asteroseismology, interferometry).\\
 
+Spectroscopy is an information-rich domain. The spectrum of a single star can be used to infer the effective temperature, density, convective motions, chemical composition, convective motions, magnetic field strength, mass, radius, and age. However, scientific inferences conditioned on stellar spectra are subject to nuances of data reduction and model mis-specification. To keep analyses tractable we are often forced to use simplifications of stellar atmospheres, make unrealistic assumptions of local thermodynamic equilibrium, and the ingredients used for synthesizing spectra are knowingly incomplete. For these reasons, stellar spectroscopy is often dominated by systematic errors.\\
+
+These effects conspire to produce biased estimates of chemical abundances. Those biases can be mitigated by measuring the chemical abundance of one star \emph{differentially} to another. The \emph{differential} aspect is that we measure the strength of individual absorption lines relative to a reference star that is very similar in stellar properties. Doing so on a line-by-line basis with a star of similar properties causes many of the systematic effects to cancel out. For example, if the oscillator strength is incorrect, causing us to infer a high abundance based on this line, then we would also infer a similarly high abundance for this line in the reference star. The bias moves in the same direction, leading to a precise differential measurement even if our individual measurements were systematically biased.\\
+
+The line-by-line differential abundance analysis technique leverages these cancellations, and is now well-established. These measurements are often taken relative to a reference star. It is often assumed that the reference star must have stellar parameters that are accurately determined from non-spectroscopic methods, which greatly limits the applicability of the method. In this work we demonstrate how the line-by-line differential abundance technique can be used even when the reference star is chosen only to be similar in stellar parameters, without requiring the reference star to have accurately known fundamental parameters from non-spectroscopic methods. 
+
+
+As an example application, we show that pair-wise differential abundance measurements can be used to better estimate the chemical homogeneity of star clusters. 
+
+
+
+
+
+
+Here we will argue that the stellar parameters do not need to be accurately known by non-spectroscopic methods: the two stars just must be very similar in their stellar parameters. Those criteria are different, as so-called Doppleganger pairs can be found by selecting stars that have nearly identical spectra, even if the stellar parameters are not yet known.\\
+
+Those biases can dominate even as more absorption lines are used to measure the chemical abundances of a star. Or if we are trying to measure the chemical homogeniety of a star cluster (e.g., how much intrinsic variation is there in chemical abundances), systematic biases can dominate even as more stars are added. The intrinsic abundance variations in star clusters can set stringent limits for chemical tagging, but this measurement is 
+
+This sets a fundamental limit for scientific inferences. 
+
+
+
+\todo{say more about chemical homogeniety, not like spectra.}
+
+%These effects can be mitigated by measuring the chemical abundance of one star \emph{relative} to another. For two stars of similar stellar parameters, the effects of non-local thermodynamic equilibrium are approximately the same. If a single transition has poorly known parameters that lead to a biased estimate of metallicity, that bias is approximately the same for two very similar stars. This has led to the line-by-line differential abundance analysis technique, where all measurements are made relative to a so called reference star: where the stellar parameters of the reference star are well-measured by non-spectroscopic methods (e.g., asteroseismology, interferometry).\\
 
 \section{Method} \label{sec:method}
 Here we show that the line-by-line differential abundance technique can be extended to estimate the chemical homogenity of star clusters without the need for reference stars. Let ${X}$ be a set of observations that are drawn from a normal distribution
 \begin{eqnarray}
    X \sim \mathcal{N}(\mu_x, \sigma_x^2)
 \end{eqnarray}
-\noindent{}with mean $\mu_x$ and variance $\sigma_x^2$. Here, $X$ represents the metallicity [Fe/H] measured from a star in a cluster, and we are interested in estimating $\sigma_x$. Because each estimate of $X$ is biased by systematic effects, we will instead measure the pair-wise metallicity $Y$
+\noindent{}with mean $\mu_x$ and variance $\sigma_x^2$. Here, $X$ represents the metallicity [Fe/H] measured for a star in a cluster, and we are interested in estimating the chemical homogeneity of the cluster $\sigma_x$. Many classical spectroscopic analyses lead to biased estimates of $X$ due to imperfect models and systematic effects. For this reason, we will instead define the pair-wise metallicity $Y$
 \begin{eqnarray}
     Y_{ij} = X_i - X_j
 \end{eqnarray}
-\noindent{}in a line-by-line differential manner. We provide a step-by-step example in Section~\ref{sec:experiments}. The variance of $Y_{ij}$ is given by
+\noindent{}as being a relative abundance that is measured in a line-by-line differential manner. We provide a step-by-step example in Section~\ref{sec:experiments}. The variance of $Y_{ij}$ is then given by
 \begin{equation}
     \mathrm{Var}(Y_{ij}) = \mathrm{Var}(X_i - X_j)
 \end{equation}
 \begin{equation}
     \mathrm{Var}(Y_{ij}) = \mathrm{Var}(X_i) + \mathrm{Var}(X_j) - 2\mathrm{Cov}(X_i,X_j)
 \end{equation}
-\noindent{}where $\mathrm{Cov}(X_i,X_j)$ is the covariance between metallicity measurements of two (randomly selected) stars in a cluster that have near identical stellar parameters. We assume that the covariance will tend towards zero as the difference in stellar parameters of the two stars approaches zero. We further assume that the $X$ and $Y$ values are each identitically distributed such that 
+\noindent{}where $\mathrm{Cov}(X_i,X_j)$ is the covariance between metallicity measurements of two (randomly selected) stars in a cluster that have near identical stellar parameters. We assume that the covariance will tend towards zero as the difference in stellar parameters of the two stars approaches zero. We further assume that the $X_i$ and $X_j$ values are each identitically distributed such that the variance in a pair-wise metallicity $Y$ is related to the variance in $X$ as
 \begin{equation}
-    \mathrm{Var}(Y) = 2\,\mathrm{Var}(X)
+    \mathrm{Var}(Y) = 2\,\mathrm{Var}(X) \quad .
 \end{equation}
-By taking many pair-wise abundance differences $Y$ and computing their sample variance $\mathrm{Var}(Y)$ we can estimate the intrinsic chemical homogenity of a cluster, and that estimate is largely unaffected by systematics due to stellar parameters and incorrect line properties:
+By taking many pair-wise abundance differences $Y$ and computing their sample variance $\mathrm{Var}(Y)$ we can estimate the intrinsic chemical homogenity of a cluster $\sigma_{x}$, and that estimate is largely unaffected by systematics errors in stellar parameters, non-local thermodynamic equilibrium, or missing and incorrect line properties:
 \begin{equation}
     \sigma_x = \frac{\sigma_y}{\sqrt{2}} \quad .
     \label{eq:sigma_x_to_sigma_y}
@@ -131,12 +155,33 @@ The simulated data set is shown in the left panel of Figure~\ref{fig:simulation}
 
 \begin{figure*}
     \includegraphics*[width=\textwidth]{simulation.pdf}
-    \caption{A simulation.\label{fig:simulation}}
+    \caption{Simulated data set of 100 stars in a cluster with a small intrinsic spread in chemistry (0.003 dex). Stars are simulated to have 250 Fe lines measured, where each line is biased slightly as a function of with stellar parameters (computed by draws of a Gaussian process with a Matern-3/2 kernel). 
+    % All 100 stars have 250 Fe transitions, where each transition has a slight bias (due to incorrect line parameters) that varies smoothly with stellar parameters, which we simulate as draws from a Gaussian process with a Matern-3/2 kernel. 
+    The left panel shows the metallicity computed by taking the average of all 250 transitions per star. The right shows the cluster homogenity as estimated from the standard deviation of 100 stars (red) or by the line-by-line differential abundances of 50 paired stars (black; dotted connections in left panel). The pair-wise method estimate is a closer match to the truth.\label{fig:simulation}}
 \end{figure*}
 
-\todo{From existing measurements, what do we find?}
+\todo{From existing line-by-line measurements in a star cluster, what intrinsic dispersion do we find?}
 
-\section{Discussion}
+\todo{From Julianne Dalcanton: useful to set the scale in an absolute sense, eg for abundances of different elements in the same cluster.}
+
+\section{Discussion} \label{sec:discussion}
+
+The line-by-line differential abundance technique \citep{Melendez:2009} is usually performed relative to a so-called `reference star' for two primary reasons. First, the stellar parameters of the reference star are assumed to be accurately known from non-spectroscopic data (e.g., interferometry or asteroseismology), thereby placing measurements \emph{relative} to some non-spectroscopic standard. Second, if the star of interest has properties that are very similar to the reference star, then it is assumed that systematics will affect both stars to the same magnitude and largely cancel out. Possible systematic effects include poorly known line properties (e.g., oscillator strengths), violations from non-local thermodynamic equalibrium, blended absorption lines, or even incorrect local continuum estimates due to nearby absorption features.\\
+
+If the stellar parameters of the reference star are not known by non-spectroscopic methods, we can still leverage the fact that abundances measured from an absorption line will be systematically biased in the same way for stars of similar stellar properties. In doing so
+
+
+If the reference star does not have stellar parameters that are known from non-spectroscopic methods, we can still leverage the fact that 
+If no reference star is used then we can still leverage the fact that the abundance measured from an absorption line will be biased in a similar way for stars of similar properties, and compute a pair-wise differential abundance between two similar stars.\\
+
+The usual concern is that -- without a reference star -- the stellar parameters we infer will be incorrect for both stars. To first order this matters less for a pair-wise differential abundance measurement. If the stellar parameters are biased, then individual lines will still be biased in a similar way. What is of interest is to know \emph{how} poorly we should be estimating the stellar parameters before we can conclude that we cannot even measure a pair-wise abundance difference, and all hope is lost. Atomic lines used for differential analyses are usually chosen to be linear on the curve of growth, such that a change in temperature translates to a change in line abundance of
+%\begin{eqnarray}
+%    \Delta\log{A} \approx \frac{5040\chi\Delta{}T_\mathrm{eff}}{T_\mathrm{eff}\left(T_\mathrm{eff} + \Delta{}T_\mathrm{eff}\right)}
+%    Δlog A ≈ (5040χ * ΔT) / (Teff * (Teff + ΔT))
+%    \Delta\log{A} \approx \frac{5040\chi\Delta{}T}{}
+%\Delta\log{A} \approx \frac{5040}{\chi{}\,T_\mathrm{eff}}\left(\frac{1}{1 + \Delta{}T_\mathrm{eff}}\right)
+%\end{eqnarray}
+%where $\chi$ is the lower excitation potential of the transition.
 
 \todo{Line-by-line differential analysis usually assumes a reference star for two reasons: we assume we know something about  that star, and that the systematics in stellar spectroscopy will be similar between the star of interest and the reference star.}
 
@@ -158,6 +203,24 @@ Let's say you have some stars in a cluster. Either you have observed them alread
 \end{enumerate}
 
 
+% Yong et al 2013 did this for NGC 6752 where the reference star was just a median RGB tip star or a RGB clump star. 
+% they repreated with a different reference star and it made no difference
+% From his data we get std.dev of ~0.02 dex, he quotes 0.03 dex in his paper.
+
+% Casmila https://www.aanda.org/articles/aa/full_html/2020/03/aa36978-19/aa36978-19.html differential analysis over larger range of stars, grouping  them together within 0.45 dex of logg and Teff. they find ~0.02-0.03 dex
+
+
+
+
+
+
+% Fan Liu differential abundances of M67 https://ui.adsabs.harvard.edu/abs/2016MNRAS.463..696L/abstract they get 0.02 dex
+
+% Spina differential https://ui.adsabs.harvard.edu/abs/2018ApJ...863..179S/abstract Pleiades 
+
+% https://arxiv.org/pdf/2409.15207 for Pleiades 
+
+% https://arxiv.org/pdf/astro-ph/0603219 first example of differential analysis?
 
 \section{Conclusions} \label{sec:conclusions}
 We have shown that freshman statistics is useful.
